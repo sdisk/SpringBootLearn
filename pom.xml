@@ -13,6 +13,7 @@
 
     <modules>
         <module>springboot-activiti</module>
+        <module>springboot-core</module>
     </modules>
 
     <parent>
