@@ -45,7 +45,7 @@ public class Application extends SpringBootServletInitializer {
                         "Local: \t\t{}://localhost:{}\n\t" +
                         "External: \t{}://{}:{}\n\t" +
                         "Profile(s): \t{}\n----------------------------------------------------------",
-                env.getProperty("swallow.system.name"),
+                env.getProperty("acti.system.name"),
                 protocol,
                 env.getProperty("server.port"),
                 protocol,
