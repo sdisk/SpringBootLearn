@@ -28,7 +28,7 @@ public class DeploymentController extends BaseController {
     @GetMapping
     @ResponseBody
     public Result<List<DeploymentVo>> find(@ModelAttribute("deployment") DeploymentVo deploymentVo){
-        List<Deployment> list = workFlowService.find(deploymentVo);
+        List<Deployment> list = workFlowService.findDeployment(deploymentVo);
         List<DeploymentVo> data = new ArrayList<>(list.size());
         data = list.stream().map(de -> {
             DeploymentVo vo = new DeploymentVo();
