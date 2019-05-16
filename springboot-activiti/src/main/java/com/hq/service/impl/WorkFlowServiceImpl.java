@@ -4,16 +4,14 @@ import com.hq.model.vo.DeploymentVo;
 import com.hq.model.vo.ProcessDefinitionVo;
 import com.hq.service.IWorkFlowService;
 import org.activiti.engine.*;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.DeploymentBuilder;
-import org.activiti.engine.repository.DeploymentQuery;
-import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -77,11 +75,27 @@ public class WorkFlowServiceImpl implements IWorkFlowService {
 
     @Override
     public InputStream findImageInputStream(String deploymentId, String diagramResourceName) {
-        return null;
+        return repositoryService.getResourceAsStream(deploymentId, diagramResourceName);
     }
 
     @Override
     public List<ProcessDefinition> findProcessDefinition(ProcessDefinitionVo process) {
-        return null;
+        List<ProcessDefinition> list = new ArrayList<>();
+        ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
+        if (null != process.getKey() && !"".equals(process.getKey())){
+            query.processDefinitionKeyLike("%" + process.getKey() + "%");
+        }
+        if (null != process.getName() && !"".equals(process.getName())){
+            query.processDefinitionNameLike("%" + process.getName() + "%");
+        }
+        if (null != process.getResourceName() && !"".equals(process.getResourceName())){
+            query.processDefinitionResourceNameLike("%" + process.getResourceName() + "%");
+        }
+        if (null != process.getVersion() && !"".equals(process.getVersion())){
+            query.processDefinitionVersion(Integer.valueOf(process.getVersion()));
+        }
+
+        list = query.orderByProcessDefinitionId().asc().list();
+        return list;
     }
 }
