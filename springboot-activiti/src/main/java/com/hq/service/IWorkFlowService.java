@@ -2,12 +2,16 @@ package com.hq.service;
 
 import com.hq.model.vo.DeploymentVo;
 import com.hq.model.vo.ProcessDefinitionVo;
+import com.hq.model.vo.WorkFlowVo;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Task;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: SpringBootLearn
@@ -52,4 +56,32 @@ public interface IWorkFlowService {
      */
     List<ProcessDefinition> findProcessDefinition(ProcessDefinitionVo process);
 
+    /**
+     * 查询当前人的流程
+     * @param id
+     * @return
+     */
+    List<Task> findTask(long id);
+
+    /**
+     * 根据任务id查询当前实例的所有流程批注
+     * @param id
+     * @return
+     */
+    List<Comment> findCommentByTaskId(String id);
+
+    /**
+     * 审核工作流
+     * @param workFlowVo
+     */
+    boolean compeleteTask(WorkFlowVo workFlowVo);
+
+    /**
+     * 查看当前活动，获取档期活动对应的x,y,width,height，将4个值放入map中
+     * @param taskId
+     * @return
+     */
+    Map<String,Object> finfCoordingByTask(String taskId);
+
+    ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 }

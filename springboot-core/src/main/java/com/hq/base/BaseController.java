@@ -5,6 +5,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @description: 基础controller
@@ -14,6 +15,7 @@ public class BaseController {
 
     protected static final String REDIRECT = "redirect:";
     protected static final String FORWARD = "forward:";
+
 
     public HttpServletRequest getRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
@@ -25,6 +27,10 @@ public class BaseController {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes()).getResponse();
         return response;
+    }
+
+    public HttpSession getSession(){
+        return getRequest().getSession();
     }
 
 }
